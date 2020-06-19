@@ -20,7 +20,7 @@ public class GME : MonoBehaviour
         winManager = GetComponent<WinManager>();
     }
 
-    public void Update()
+    /*public void Update()
     {
         if (playerHealth.currentHealth <= 0)
         {
@@ -35,12 +35,12 @@ public class GME : MonoBehaviour
                 Cursor.lockState = CursorLockMode.Confined;
             }
         }
-    }
+    }*/
 
-    public void WinLevel()
+    /*public void WinLevel()
     {
         nextLevel = true;
         PlayerPrefs.SetInt("LevelReached", LevelToUnlock);
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex+1);
-    }
+    }*/
 }

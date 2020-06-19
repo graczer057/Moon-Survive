@@ -31,6 +31,15 @@ public class EnemyAttack : MonoBehaviour {
         }
     }
 
+    private void OnTriggerStay(Collider other)
+    {
+        if (other.gameObject == player)
+        {
+            playerInRange = true;
+            anim.SetBool("PUNCH", true);
+        }
+    }
+
     void OnTriggerExit(Collider other)
     {
         if(other.gameObject == player)

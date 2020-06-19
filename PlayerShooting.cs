@@ -1,11 +1,24 @@
 ﻿using UnityEngine;
+using System.Collections;
+using System.Collections.Generic;
 
 public class PlayerShooting : MonoBehaviour {
 
-    public int damagePerShot = 20;                              //Damage of the bullets
-    public float timeBetweenBullets = 0.10f;                    //Time you must wait to shot next bullet
-    public float range = 100f;                                  //Range of the bullet
-    
+    [SerializeField]
+    private int damagePerShot = 20;                              //Damage of the bullets
+    [SerializeField]
+    private int magazine = 15;                                   //Amount of ammunition
+    [SerializeField]
+    private float timeBetweenBullets = 0.10f;                    //Time you must wait to shot next bullet
+    [SerializeField]
+    private float range = 100f;                                  //Range of the bullet
+    private float rechargeTime = 3.0f;
+    private float curRechargeTime;
+    private bool isRecharging;
+
+    [SerializeField]
+    private GameObject rechargeInfo;                            //Gameobject with image and text about recharging weapon
+
     float timer;                                                //Timer that counting time in some functions on the bellow
     Ray shootRay;                                               //Ray of our bullet
     RaycastHit shootHit;                                        //Ray when our bullet hit   
@@ -29,9 +42,41 @@ public class PlayerShooting : MonoBehaviour {
         
         timer += Time.deltaTime;                                                    //Setting timer
 
-        if(Input.GetButtonDown ("Fire1") && timer >= timeBetweenBullets)            //If we press the Fire1 button (LMB) and the timer is bigger or equal than time betweenBullets then we calling a void Shoot
-        {   
-            Shoot();
+        if (magazine > 0)
+        {
+            if (Input.GetButtonDown("Fire1") && timer >= timeBetweenBullets && !isRecharging)            //If we press the Fire1 button (LMB) and the timer is bigger or equal than time betweenBullets then we calling a void Shoot
+            {
+                Shoot();
+                magazine--;
+                Debug.Log(magazine);
+            }
+
+            if (Input.GetKeyDown(KeyCode.R) && !isRecharging)
+            {
+                curRechargeTime = rechargeTime;
+                isRecharging = true;
+                Recharge();
+            }
+        }
+        else
+        {
+            rechargeInfo.gameObject.SetActive(true);
+            if (Input.GetKeyDown(KeyCode.R) && !isRecharging)
+            {
+                curRechargeTime = rechargeTime;
+                isRecharging = true;
+                Recharge();
+            }
+        }
+
+        if (isRecharging)
+        {
+            curRechargeTime -= Time.fixedDeltaTime;
+
+            if(curRechargeTime <= 0)
+            {
+                isRecharging = false;
+            }
         }
 
         if(timer >= timeBetweenBullets * effectsDisplayTime)                        //if timer is bigger or equal than time betweenBullets * effect display then we calling void DisableEffects
@@ -81,5 +126,12 @@ public class PlayerShooting : MonoBehaviour {
             gunLine.SetPosition(1, shootRay.origin + shootRay.direction * range);           //Or when we aren't hit the enemy then raycast is drawing the line normally
         }
 
+    }
+
+    void Recharge()
+    {
+        magazine = 15;
+        rechargeInfo.gameObject.SetActive(false);
+        Debug.Log(magazine);
     }
 }

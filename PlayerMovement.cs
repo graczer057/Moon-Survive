@@ -11,6 +11,7 @@ public class PlayerMovement : MonoBehaviour {
     public Transform rightGunBone;
     public Transform leftGunBone;
     public Arsenal[] arsenal;
+    PlayerShooting playerShooting;
 
     void Start()
     {

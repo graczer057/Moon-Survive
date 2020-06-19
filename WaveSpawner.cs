@@ -79,9 +79,10 @@ public class WaveSpawner : MonoBehaviour {
         if (nextWave + 1 > waves.Length - 1)
         {
             DestroyObject(GameObject.FindGameObjectWithTag("SPAWNER"), 1f);
+            DestroyObject(GameObject.FindGameObjectWithTag("Spawners"), 2f);
             Spawn.spawners -= scoreValue;
             nextWave = 0;
-            gme.WinLevel();
+            //gme.WinLevel();
         }
         else
         {

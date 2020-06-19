@@ -26,10 +26,10 @@ public class WinManager : MonoBehaviour {
 
              if (restartTimer >= restartDelay)
              {
-                 SceneManager.LoadScene("Menu");
+                 //SceneManager.LoadScene("Menu");
                  Cursor.visible = true;
                  Cursor.lockState = CursorLockMode.None;
-                levelSelection.levelButtons[1].interactable = true;
+                //levelSelection.levelButtons[1].interactable = true;
 
             }
         }
